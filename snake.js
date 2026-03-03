@@ -1,4 +1,4 @@
-javascript:// Forest Snake Game
+javascript: // Forest Snake Game - Updated Version
 (function(){
   if(document.getElementById("snakeForest")){document.getElementById("snakeForest").remove(); return;}
 
@@ -52,7 +52,7 @@ javascript:// Forest Snake Game
   function randPos(){ return { x:Math.floor(Math.random()*30)*box, y:Math.floor(Math.random()*20)*box }; }
 
   function init(){
-    snake=[{x:300,y:200}];
+    snake=[{x:5*box, y:10*box}]; // start in left-middle
     direction="RIGHT";
     score=0;
     points=0;
@@ -98,7 +98,7 @@ javascript:// Forest Snake Game
     ctx.fillStyle="#013220";
     ctx.fillRect(0,0,canvas.width,canvas.height);
     ctx.fillStyle="#014d2e";
-    for(let i=0;i<50;i++) ctx.fillRect((i*40-scrollX)%canvas.width,Math.random()*canvas.height,20,20);
+    for(let i=0;i<50;i++) ctx.fillRect((i*40-scrollX)%canvas.width, Math.random()*canvas.height, 20, 20);
   }
 
   function draw(){
@@ -113,7 +113,11 @@ javascript:// Forest Snake Game
     ctx.fillStyle="red";
     ctx.fillRect(food.x,food.y,box,box);
 
-    snake.forEach((s,i)=>{ ctx.fillStyle=i===0?"#00ff99":"#00cc77"; ctx.fillRect(s.x,s.y,box,box); });
+    // Draw snake (always visible, ignore scroll)
+    snake.forEach((s,i)=>{
+      ctx.fillStyle=i===0?"#ffff00":"#00ff00"; // head yellow, body bright green
+      ctx.fillRect(s.x,s.y,box,box);
+    });
 
     let head=snake[0];
     let nh={x:head.x,y:head.y};
@@ -127,7 +131,7 @@ javascript:// Forest Snake Game
 
     let hitRock=rocks.some(r=>r.x<nh.x+box && r.x+box>nh.x && r.y<nh.y+box && r.y+box>nh.y);
     if(hitRock){
-      if(lives>0){ lives--; snake=[{x:300,y:200}]; direction="RIGHT"; rocks=[]; }
+      if(lives>0){ lives--; snake=[{x:5*box, y:10*box}]; direction="RIGHT"; rocks=[]; }
       else{ alert("Game Over | Score:"+score); init(); return; }
     }
 
